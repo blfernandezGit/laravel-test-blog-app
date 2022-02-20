@@ -19,7 +19,13 @@ Route::get('/', function () {
 
 // {post} wrapped in braces - wildcard, like :id - will be accessed using the $slug variable
 Route::get('/posts/{post}', function ($slug) {
-    $post = file_get_contents(__DIR__ . "/../resources/posts/{$slug}.html");
+    $path = __DIR__ . "/../resources/posts/{$slug}.html";
+
+    if (! file_exists($path)) {
+        dd('file does not exist'); //for quick debugging - dump and die (ddd not currently working)
+    }
+
+    $post = file_get_contents($path);
 
     return view('post', [
         'post' => $post
