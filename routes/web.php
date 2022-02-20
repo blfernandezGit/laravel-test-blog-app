@@ -22,7 +22,8 @@ Route::get('/posts/{post}', function ($slug) {
     $path = __DIR__ . "/../resources/posts/{$slug}.html";
 
     if (! file_exists($path)) {
-        dd('file does not exist'); //for quick debugging - dump and die (ddd not currently working)
+        // abort(404); //not found page
+        return redirect('/'); //redirect to homepage
     }
 
     $post = file_get_contents($path);
