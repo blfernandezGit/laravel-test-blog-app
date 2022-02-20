@@ -26,7 +26,13 @@ Route::get('/posts/{post}', function ($slug) {
         return redirect('/'); //redirect to homepage
     }
 
-    $post = file_get_contents($path);
+    //Caching cache()->remember(key, expiry, func)
+   $post =  cache()->remember("posts.{$slug}", now()->addHours(24) , function () use ($path) {
+       //now()->addDays() now()->addMinutes - helpers to avoid manual conversions
+       //need access to $path inside a closure -> use ($path)
+        // var_dump('file_get_contents'); -> just display 'file_get_contents' string when not in cache
+        return file_get_contents($path); 
+    });
 
     return view('post', [
         'post' => $post
