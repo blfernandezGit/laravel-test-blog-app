@@ -31,4 +31,11 @@ Route::get('/posts/{post}', function ($slug) {
     return view('post', [
         'post' => $post
     ]);
-});
+})->where('post', '[A-z_\-]+');
+
+//where('post', '[A-z_\-]+');
+//constraint -> use wildcard 'post' -> regex -> gives 404 if wrong characters
+//regex: look for anything A to z could be capital or not, + means find one or more of preceding character and nothing else [A-z]+
+//add _ and -, use \ to escape to avoid '-' being registered as 'to'
+//whereAlpha('post');
+//upper or lower case letter only
