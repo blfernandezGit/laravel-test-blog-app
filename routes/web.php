@@ -17,8 +17,11 @@ Route::get('/', function () {
     return view('posts');
 });
 
-Route::get('/post', function () {
+// {post} wrapped in braces - wildcard, like :id - will be accessed using the $slug variable
+Route::get('/posts/{post}', function ($slug) {
+    $post = file_get_contents(__DIR__ . "/../resources/posts/{$slug}.html");
+
     return view('post', [
-        'post' => '<h1>My Post</h1>'
+        'post' => $post
     ]);
 });
